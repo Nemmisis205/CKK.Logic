@@ -20,5 +20,10 @@ namespace CKK.Logic.Models
         public void SetQuantity(int quantity) { _quantity = quantity; }
         public Product GetProduct() { return _product; }
         public void SetProduct(Product product) { _product = product; }
+        
+        public decimal GetTotal()
+        {
+            return GetQuantity() * GetProduct().GetPrice();
+        }
     }
 }
