@@ -14,13 +14,17 @@ namespace CKK.tests
             ShoppingCart cart = new ShoppingCart(custard);
             Product prod1 = new Product();
             Product prod2 = new Product();
+            Product prod3 = new Product();
 
             //Act
             cart.AddProduct(prod1, 4);
             cart.AddProduct(prod2);
+            cart.AddProduct(prod1, 2);
+            cart.AddProduct(prod3, -4);
 
             //Assert
             Assert.Equal(prod1, cart.GetProduct(1).GetProduct());
+            Assert.Equal(6, cart.GetProduct(1).GetQuantity());
             Assert.Equal(1, cart.GetProduct(2).GetQuantity());
             Assert.Null(cart.GetProduct(3));
         }
