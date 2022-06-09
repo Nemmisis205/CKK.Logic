@@ -22,20 +22,43 @@ namespace CKK.Logic.Models
         {
             return _customer.GetId();
         }
-        public void AddProduct(Product prod, int quantity)
+        public ShoppingCartItem AddProduct(Product prod, int quantity)
         {
-            if (_product1 == null)
+            if(quantity > 0)
             {
-                _product1 = new ShoppingCartItem(prod, quantity);
+                if (_product1 != null && prod == _product1.GetProduct())
+                {
+                    _product1.SetQuantity(_product1.GetQuantity() + quantity);
+                    return _product1;
+                }
+                else if (_product2 != null && prod == _product2.GetProduct())
+                {
+                    _product2.SetQuantity(_product2.GetQuantity() + quantity);
+                    return _product2;
+                }
+                else if (_product3 != null && prod == _product3.GetProduct())
+                {
+                    _product3.SetQuantity(_product3.GetQuantity() + quantity);
+                    return _product3;
+                }
+                else if (_product1 == null)
+                {
+                    _product1 = new ShoppingCartItem(prod, quantity);
+                    return _product1;
+                }
+                else if (_product2 == null)
+                {
+                    _product2 = new ShoppingCartItem(prod, quantity);
+                    return _product2;
+                }
+                else if (_product3 == null)
+                {
+                    _product3 = new ShoppingCartItem(prod, quantity);
+                    return _product3;
+                }
+                else { return null; }
             }
-            else if (_product2 == null)
-            {
-                _product2 = new ShoppingCartItem(prod, quantity);
-            }
-            else if (_product3 == null)
-            {
-                _product3 = new ShoppingCartItem(prod, quantity);
-            }
+            else { return null; }
         }
         public ShoppingCartItem AddProduct(Product prod)
         {
