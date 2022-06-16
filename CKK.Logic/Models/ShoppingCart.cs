@@ -43,11 +43,11 @@ namespace CKK.Logic.Models
             }
             else { return null; }
         }
-        public ShoppingCartItem RemoveProduct(Product prod, int quantity)
+        public ShoppingCartItem RemoveProduct(int prodId, int quantity)
         {
             var cartCheck =
                 from item in _products
-                where prod == item.GetProduct()
+                where prodId == item.GetProduct().GetId()
                 select item;
             var choice = cartCheck.First();
 
