@@ -10,7 +10,7 @@ namespace CKK.Logic.Models
     {
         private int _id;
         private string _name;
-        private List<StoreItem> _items;
+        private List<StoreItem> _items = new List<StoreItem>();
 
         public int GetId() { return _id; }
         public void SetId(int id) { _id = id; }
