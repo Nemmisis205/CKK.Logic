@@ -28,7 +28,6 @@ namespace CKK.Logic.Models
                     from item in _products
                     where prod == item.GetProduct()
                     select item;
-                var choice = cartCheck.First();
 
                 if (cartCheck.Any() == false)
                 {
@@ -37,6 +36,7 @@ namespace CKK.Logic.Models
                 }
                 else
                 {
+                    var choice = cartCheck.First();
                     choice.SetQuantity(choice.GetQuantity() + quantity);
                     return choice;
                 }
@@ -49,7 +49,6 @@ namespace CKK.Logic.Models
                 from item in _products
                 where prodId == item.GetProduct().GetId()
                 select item;
-            var choice = cartCheck.First();
 
             if (cartCheck.Any() == false)
             {
@@ -57,6 +56,9 @@ namespace CKK.Logic.Models
             }
             else
             {
+
+                var choice = cartCheck.First();
+
                 if (choice.GetQuantity() > quantity)
                 {
                     choice.SetQuantity(choice.GetQuantity() - quantity);

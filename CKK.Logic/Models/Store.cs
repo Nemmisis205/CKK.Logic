@@ -22,7 +22,6 @@ namespace CKK.Logic.Models
                 from item in _items
                 where item.GetProduct() == prod
                 select item;
-            var choice = storeCheck.First();
 
             if (storeCheck.Any() == false)
             {
@@ -31,6 +30,8 @@ namespace CKK.Logic.Models
             }
             else
             {
+
+                var choice = storeCheck.First();
                 choice.SetQuantity(choice.GetQuantity() + quantity);
                 return choice;
             }
