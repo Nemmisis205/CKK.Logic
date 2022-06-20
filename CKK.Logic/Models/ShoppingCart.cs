@@ -80,7 +80,14 @@ namespace CKK.Logic.Models
                 where id == item.GetProduct().GetId()
                 select item;
 
-            return cartCheck.First();
+            if (cartCheck.Any() == false)
+            {
+                return null;
+            }
+            else
+            {
+                return cartCheck.First();
+            }
         }
 
         public decimal GetTotal()

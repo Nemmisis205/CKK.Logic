@@ -18,27 +18,27 @@ namespace CKK.Logic.Models
         public void SetName(string name) { _name = name; }
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
-            var storeCheck =
-                from item in _items
-                where item.GetProduct() == prod
-                select item;
+            if (quantity > 0) 
+            { 
+                var storeCheck =
+                    from item in _items
+                    where item.GetProduct() == prod
+                    select item;
 
-            if (storeCheck.Any() == false)
-            {
-                _items.Add(new StoreItem(prod, quantity));
-                return _items.Last();
-            }
-            else
-            {
-
-                var choice = storeCheck.First();
-                if (quantity > 0)
+                if (storeCheck.Any() == false)
                 {
+                    _items.Add(new StoreItem(prod, quantity));
+                    return _items.Last();
+                }
+                else
+                {
+                    var choice = storeCheck.First();
+
                     choice.SetQuantity(choice.GetQuantity() + quantity);
                     return choice;
                 }
-                else { return null; }
             }
+            else { return null; }
         }
         public StoreItem RemoveStoreItem(int productNumber, int quantity)
         {
