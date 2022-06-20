@@ -32,8 +32,12 @@ namespace CKK.Logic.Models
             {
 
                 var choice = storeCheck.First();
-                choice.SetQuantity(choice.GetQuantity() + quantity);
-                return choice;
+                if (quantity > 0)
+                {
+                    choice.SetQuantity(choice.GetQuantity() + quantity);
+                    return choice;
+                }
+                else { return null; }
             }
         }
         public StoreItem RemoveStoreItem(int productNumber, int quantity)
@@ -70,7 +74,7 @@ namespace CKK.Logic.Models
                 where id == item.GetProduct().GetId()
                 select item;
 
-            if (idPull == null)
+            if (idPull.Any() == false)
             {
                 return null;
             }
