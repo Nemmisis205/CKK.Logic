@@ -8,36 +8,36 @@ namespace CKK.Logic.Models
 {
     public class ShoppingCart
     {
-        private Customer _customer;
-        private List<ShoppingCartItem> _products = new List<ShoppingCartItem>();
+        public Customer Customer { get; set; }
+        public List<ShoppingCartItem> Products { get; set; }
 
         public ShoppingCart(Customer cust)
         {
-            _customer = cust;
+            Customer = cust;
         }
 
         public int GetCustomerId()
         {
-            return _customer.GetId();
+            return Customer.Id;
         }
         public ShoppingCartItem AddProduct(Product prod, int quantity)
         {
             if(quantity > 0)
             {
                 var cartCheck =
-                    from item in _products
-                    where prod == item.GetProduct()
+                    from item in Products
+                    where prod == item.Product
                     select item;
 
                 if (cartCheck.Any() == false)
                 {
-                    _products.Add(new ShoppingCartItem(prod, quantity));
-                    return _products.Last();
+                    Products.Add(new ShoppingCartItem(prod, quantity));
+                    return Products.Last();
                 }
                 else
                 {
                     var choice = cartCheck.First();
-                    choice.SetQuantity(choice.GetQuantity() + quantity);
+                    choice.Quantity += quantity;
                     return choice;
                 }
             }
@@ -46,8 +46,8 @@ namespace CKK.Logic.Models
         public ShoppingCartItem RemoveProduct(int prodId, int quantity)
         {
             var cartCheck =
-                from item in _products
-                where prodId == item.GetProduct().GetId()
+                from item in Products
+                where prodId == item.Product.Id
                 select item;
 
             if (cartCheck.Any() == false)
@@ -59,15 +59,15 @@ namespace CKK.Logic.Models
 
                 var choice = cartCheck.First();
 
-                if (choice.GetQuantity() > quantity)
+                if (choice.Quantity > quantity)
                 {
-                    choice.SetQuantity(choice.GetQuantity() - quantity);
+                    choice.Quantity -= quantity;
                     return choice;
                 }
                 else
                 {
-                    choice.SetQuantity(0);
-                    _products.Remove(choice);
+                    choice.Quantity = 0;
+                    Products.Remove(choice);
                     return choice;
                 }
             }
@@ -76,8 +76,8 @@ namespace CKK.Logic.Models
         public ShoppingCartItem GetProductById(int id)
         {
             var cartCheck =
-                from item in _products
-                where id == item.GetProduct().GetId()
+                from item in Products
+                where id == item.Product.Id
                 select item;
 
             if (cartCheck.Any() == false)
@@ -94,9 +94,9 @@ namespace CKK.Logic.Models
         {
             decimal total = 0;
             
-            foreach (var item in _products)
+            foreach (var item in Products)
             {
-                total += item.GetProduct().GetPrice() * item.GetQuantity();
+                total += item.GetTotal();
             }
 
             return total;
@@ -104,7 +104,7 @@ namespace CKK.Logic.Models
 
         public List<ShoppingCartItem> GetProducts()
         {
-            return _products;
+            return Products;
         }
     }
 }

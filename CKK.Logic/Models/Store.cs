@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CKK.Logic.Interfaces;
 
 namespace CKK.Logic.Models
 {
-    public class Store
+    public class Store : Entity
     {
-        private int _id;
-        private string _name;
         private List<StoreItem> _items = new List<StoreItem>();
 
-        public int GetId() { return _id; }
-        public void SetId(int id) { _id = id; }
-        public string GetName() { return _name; }
-        public void SetName(string name) { _name = name; }
+        public Store(int id, string name) : base(id, name) { }
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
             if (quantity > 0) 
