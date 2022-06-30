@@ -18,7 +18,7 @@ namespace CKK.Logic.Models
             { 
                 var storeCheck =
                     from item in _items
-                    where item.GetProduct() == prod
+                    where item.Product == prod
                     select item;
 
                 if (storeCheck.Any() == false)
@@ -30,7 +30,7 @@ namespace CKK.Logic.Models
                 {
                     var choice = storeCheck.First();
 
-                    choice.SetQuantity(choice.GetQuantity() + quantity);
+                    choice.Quantity += quantity;
                     return choice;
                 }
             }
@@ -40,20 +40,20 @@ namespace CKK.Logic.Models
         {
             var removeCheck =
                 from item in _items
-                where item.GetProduct().GetId() == productNumber
+                where item.Product.Id == productNumber
                 select item;
 
             var choice = removeCheck.First();
             if (removeCheck.Any() == true)
             {
-                if (quantity < choice.GetQuantity())
+                if (quantity < choice.Quantity)
                 {
-                    choice.SetQuantity(choice.GetQuantity() - quantity);
+                    choice.Quantity -= quantity;
                     return choice;
                 }
                 else
                 {
-                    choice.SetQuantity(0);
+                    choice.Quantity = 0;
                     return choice;
                 }
             }
@@ -67,7 +67,7 @@ namespace CKK.Logic.Models
         {
             var idPull =
                 from item in _items
-                where id == item.GetProduct().GetId()
+                where id == item.Product.Id
                 select item;
 
             if (idPull.Any() == false)
