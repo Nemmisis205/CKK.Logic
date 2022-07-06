@@ -7,7 +7,7 @@ using CKK.Logic.Interfaces;
 
 namespace CKK.Logic.Models
 {
-    public class Store : Entity
+    public class Store : Entity, IStore
     {
         private List<StoreItem> _items = new List<StoreItem>();
 
