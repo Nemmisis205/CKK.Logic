@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CKK.Logic.Interfaces;
+using CKK.Logic.Exceptions;
+
 
 namespace CKK.Logic.Models
 {
@@ -14,7 +16,8 @@ namespace CKK.Logic.Models
         //public Store(int id, string name) : base(id, name) { }
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
-            if (quantity > 0) 
+            if(quantity <= 0) { throw new InventoryItemStockTooLowException(); }
+            else if (quantity > 0) 
             { 
                 var storeCheck =
                     from item in _items
@@ -38,12 +41,16 @@ namespace CKK.Logic.Models
         }
         public StoreItem RemoveStoreItem(int productNumber, int quantity)
         {
+            if (quantity < 0) { throw new ArgumentOutOfRangeException(); }
+
             var removeCheck =
                 from item in _items
                 where item.Product.Id == productNumber
                 select item;
 
             var choice = removeCheck.First();
+
+            if (removeCheck.Any() == false) { throw new ProductDoesNotExistException(); }
             if (removeCheck.Any() == true)
             {
                 if (quantity < choice.Quantity)
@@ -65,6 +72,7 @@ namespace CKK.Logic.Models
         }
         public StoreItem FindStoreItemById(int id)
         {
+            if (id < 0) { throw new InvalidIdException(); }
             var idPull =
                 from item in _items
                 where id == item.Product.Id
