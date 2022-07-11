@@ -50,7 +50,7 @@ namespace CKK.Logic.Models
 
                 var choice = removeCheck.First();
 
-                if (removeCheck.Any() == false) { throw new ProductDoesNotExistException(); }
+                if (removeCheck.Any() == false) { throw new ProductDoesNotExistException("Product does not exist."); }
                 else if(quantity < 0) { throw new ArgumentOutOfRangeException("Quantity must not be negative."); }
                 else if (removeCheck.Any() == true)
                 {
