@@ -51,7 +51,7 @@ namespace CKK.Logic.Models
             var choice = removeCheck.First();
 
             if (removeCheck.Any() == false) { throw new ProductDoesNotExistException(); }
-            if (removeCheck.Any() == true)
+            else if (removeCheck.Any() == true)
             {
                 if (quantity < choice.Quantity)
                 {
