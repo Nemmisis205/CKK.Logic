@@ -41,30 +41,34 @@ namespace CKK.Logic.Models
         }
         public StoreItem RemoveStoreItem(int productNumber, int quantity)
         {
-            if (quantity < 0) { throw new ArgumentOutOfRangeException(); }
-
-            var removeCheck =
-                from item in _items
-                where item.Product.Id == productNumber
-                select item;
-
-            var choice = removeCheck.First();
-
-            if (removeCheck.Any() == false) { throw new ProductDoesNotExistException(); }
-            else if (removeCheck.Any() == true)
+            try
             {
-                if (quantity < choice.Quantity)
+                var removeCheck =
+                    from item in _items
+                    where item.Product.Id == productNumber
+                    select item;
+
+                var choice = removeCheck.First();
+
+                if (removeCheck.Any() == false) { throw new ProductDoesNotExistException(); }
+                else if(quantity < 0) { throw new ArgumentOutOfRangeException("Quantity must not be negative."); }
+                else if (removeCheck.Any() == true)
                 {
-                    choice.Quantity -= quantity;
-                    return choice;
+                    if (quantity < choice.Quantity)
+                    {
+                        choice.Quantity -= quantity;
+                        return choice;
+                    }
+                    else
+                    {
+                        choice.Quantity = 0;
+                        return choice;
+                    }
                 }
-                else
-                {
-                    choice.Quantity = 0;
-                    return choice;
-                }
+                else { return null; }
             }
-            else { return null; }
+            catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist. Please try a different ID."); return null; }
+            catch (ArgumentOutOfRangeException) { Console.WriteLine("Quantity must not be negative."); return null; }
         }
         public List<StoreItem> GetStoreItems()
         {
