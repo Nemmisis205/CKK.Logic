@@ -7,7 +7,7 @@ using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Interfaces
 {
-	public class Entity
+	public abstract class Entity
 	{
 		private int _id;
 		public int Id 

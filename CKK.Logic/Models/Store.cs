@@ -51,12 +51,12 @@ namespace CKK.Logic.Models
                     where item.Product.Id == productNumber
                     select item;
 
-                if (removeCheck.Any() == false) { throw new ProductDoesNotExistException("Product does not exist."); }
+                if (removeCheck.Any() == false) { throw new ProductDoesNotExistException(); }
                 var choice = removeCheck.First();
 
                 
-                if(quantity < 0) { throw new ArgumentOutOfRangeException("Quantity must not be negative."); }
-                else if (removeCheck.Any() == true)
+                if(quantity < 0) { throw new ArgumentOutOfRangeException(); }
+                else
                 {
                     if (quantity < choice.Quantity)
                     {
@@ -69,7 +69,6 @@ namespace CKK.Logic.Models
                         return choice;
                     }
                 }
-                else { return null; }
             }
             catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist. Please try a different ID."); return null; }
             catch (ArgumentOutOfRangeException) { Console.WriteLine("Quantity must not be negative."); return null; }
