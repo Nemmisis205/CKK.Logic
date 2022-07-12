@@ -7,7 +7,7 @@ using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Interfaces
 {
-	public abstract class Entity
+	public class Entity
 	{
 		private int _id;
 		public int Id 
@@ -20,7 +20,7 @@ namespace CKK.Logic.Interfaces
 					if (value < 0) { throw new InvalidIdException(); }
 					else { _id = value; }
                 }
-                catch (InvalidIdException) { Console.WriteLine("ID must be greater than 0."); }
+                catch (InvalidIdException) { Console.WriteLine("ID must not be negative."); }
 				//if (value < 0) { throw new InvalidIdException("ID must be greater than 0"); }
 				//else { _id = value; }
             }

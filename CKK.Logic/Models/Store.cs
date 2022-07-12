@@ -16,28 +16,31 @@ namespace CKK.Logic.Models
         //public Store(int id, string name) : base(id, name) { }
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
-            if(quantity <= 0) { throw new InventoryItemStockTooLowException(); }
-            else if (quantity > 0) 
-            { 
-                var storeCheck =
-                    from item in _items
-                    where item.Product == prod
-                    select item;
-
-                if (storeCheck.Any() == false)
-                {
-                    _items.Add(new StoreItem(prod, quantity));
-                    return _items.Last();
-                }
+            try
+            {
+                if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
                 else
                 {
-                    var choice = storeCheck.First();
+                    var storeCheck =
+                        from item in _items
+                        where item.Product == prod
+                        select item;
 
-                    choice.Quantity += quantity;
-                    return choice;
+                    if (storeCheck.Any() == false)
+                    {
+                        _items.Add(new StoreItem(prod, quantity));
+                        return _items.Last();
+                    }
+                    else
+                    {
+                        var choice = storeCheck.First();
+
+                        choice.Quantity += quantity;
+                        return choice;
+                    }
                 }
             }
-            else { return null; }
+            catch (InventoryItemStockTooLowException) { Console.WriteLine("Quantity cannot be less than 0."); return null; }
         }
         public StoreItem RemoveStoreItem(int productNumber, int quantity)
         {
@@ -48,10 +51,11 @@ namespace CKK.Logic.Models
                     where item.Product.Id == productNumber
                     select item;
 
+                if (removeCheck.Any() == false) { throw new ProductDoesNotExistException("Product does not exist."); }
                 var choice = removeCheck.First();
 
-                if (removeCheck.Any() == false) { throw new ProductDoesNotExistException("Product does not exist."); }
-                else if(quantity < 0) { throw new ArgumentOutOfRangeException("Quantity must not be negative."); }
+                
+                if(quantity < 0) { throw new ArgumentOutOfRangeException("Quantity must not be negative."); }
                 else if (removeCheck.Any() == true)
                 {
                     if (quantity < choice.Quantity)
@@ -76,18 +80,19 @@ namespace CKK.Logic.Models
         }
         public StoreItem FindStoreItemById(int id)
         {
-            if (id < 0) { throw new InvalidIdException(); }
-            var idPull =
-                from item in _items
-                where id == item.Product.Id
-                select item;
+            try 
+            { 
+                if (id < 0) { throw new InvalidIdException(); }
+                var idPull =
+                    from item in _items
+                    where id == item.Product.Id
+                    select item;
 
-            if (idPull.Any() == false)
-            {
-                return null;
+                if (idPull.Any() == false) { throw new ProductDoesNotExistException("Product does not exist."); }
+                else { return idPull.First(); }
             }
-            else { return idPull.First(); }
-           
+            catch (InvalidIdException) { Console.WriteLine("ID must not be negative."); return null; }
+            catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist."); return null; }
         }
     }
 }

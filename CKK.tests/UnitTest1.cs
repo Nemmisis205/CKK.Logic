@@ -21,7 +21,7 @@ namespace CKK.tests
 
 
             //Assert
-            Assert.Equal(prod1, )
+            
 
 
         }
