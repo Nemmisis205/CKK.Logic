@@ -79,8 +79,8 @@ namespace CKK.Logic.Models
         }
         public StoreItem FindStoreItemById(int id)
         {
-            //try 
-            //{ 
+            try 
+            { 
                 if (id < 0) { throw new InvalidIdException(); }
                 var idPull =
                     from item in _items
@@ -89,9 +89,9 @@ namespace CKK.Logic.Models
 
                 if (idPull.Any() == false) { throw new ProductDoesNotExistException(); }
                 else { return idPull.First(); }
-            //}
+            }
             //catch (InvalidIdException) { Console.WriteLine("ID must not be negative."); return null; }
-            //catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist."); return null; }
+            catch (ProductDoesNotExistException) { return null; }
         }
     }
 }

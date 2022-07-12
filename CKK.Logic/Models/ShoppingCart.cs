@@ -11,8 +11,10 @@ namespace CKK.Logic.Models
 {
     public class ShoppingCart : IShoppingCart
     {
+        private List<ShoppingCartItem> _products = new List<ShoppingCartItem>();
+
         public Customer Customer { get; set; }
-        public List<ShoppingCartItem> Products { get; set; }
+        public List<ShoppingCartItem> Products { get => _products; set => _products = value; }
 
         public ShoppingCart(Customer cust)
         {
@@ -25,27 +27,33 @@ namespace CKK.Logic.Models
         }
         public ShoppingCartItem AddProduct(Product prod, int quantity)
         {
-            if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
-            else if(quantity > 0)
+            try
             {
-                var cartCheck =
-                    from item in Products
-                    where prod == item.Product
-                    select item;
+                if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
+                else if (quantity > 0)
+                {
+                    var cartCheck =
+                         from item in Products
+                         where prod == item.Product
+                         select item;
 
-                if (cartCheck.Any() == false)
-                {
-                    Products.Add(new ShoppingCartItem(prod, quantity));
-                    return Products.Last();
+                    Console.WriteLine($"{cartCheck.GetType()}");
+
+                    if (cartCheck.Any() == false)
+                    {
+                        Products.Add(new ShoppingCartItem(prod, quantity));
+                        return Products.Last();
+                    }
+                    else
+                    {
+                        var choice = cartCheck.First();
+                        choice.Quantity += quantity;
+                        return choice;
+                    }
                 }
-                else
-                {
-                    var choice = cartCheck.First();
-                    choice.Quantity += quantity;
-                    return choice;
-                }
+                else { return null; }
             }
-            else { return null; }
+            catch (InventoryItemStockTooLowException) { return null; }
         }
         public ShoppingCartItem RemoveProduct(int prodId, int quantity)
         {
