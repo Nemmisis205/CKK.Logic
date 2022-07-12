@@ -16,8 +16,8 @@ namespace CKK.Logic.Models
         //public Store(int id, string name) : base(id, name) { }
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
-            try
-            {
+            //try
+            //{
                 if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
                 else
                 {
@@ -39,13 +39,13 @@ namespace CKK.Logic.Models
                         return choice;
                     }
                 }
-            }
-            catch (InventoryItemStockTooLowException) { Console.WriteLine("Quantity cannot be less than 0."); return null; }
+            //}
+            //catch (InventoryItemStockTooLowException) { Console.WriteLine("Quantity cannot be less than 0."); return null; }
         }
         public StoreItem RemoveStoreItem(int productNumber, int quantity)
         {
-            try
-            {
+            //try
+            //{
                 var removeCheck =
                     from item in _items
                     where item.Product.Id == productNumber
@@ -69,9 +69,9 @@ namespace CKK.Logic.Models
                         return choice;
                     }
                 }
-            }
-            catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist. Please try a different ID."); return null; }
-            catch (ArgumentOutOfRangeException) { Console.WriteLine("Quantity must not be negative."); return null; }
+            //}
+            //catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist. Please try a different ID."); return null; }
+            //catch (ArgumentOutOfRangeException) { Console.WriteLine("Quantity must not be negative."); return null; }
         }
         public List<StoreItem> GetStoreItems()
         {
@@ -79,19 +79,19 @@ namespace CKK.Logic.Models
         }
         public StoreItem FindStoreItemById(int id)
         {
-            try 
-            { 
+            //try 
+            //{ 
                 if (id < 0) { throw new InvalidIdException(); }
                 var idPull =
                     from item in _items
                     where id == item.Product.Id
                     select item;
 
-                if (idPull.Any() == false) { throw new ProductDoesNotExistException("Product does not exist."); }
+                if (idPull.Any() == false) { throw new ProductDoesNotExistException(); }
                 else { return idPull.First(); }
-            }
-            catch (InvalidIdException) { Console.WriteLine("ID must not be negative."); return null; }
-            catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist."); return null; }
+            //}
+            //catch (InvalidIdException) { Console.WriteLine("ID must not be negative."); return null; }
+            //catch (ProductDoesNotExistException) { Console.WriteLine("Product does not exist."); return null; }
         }
     }
 }

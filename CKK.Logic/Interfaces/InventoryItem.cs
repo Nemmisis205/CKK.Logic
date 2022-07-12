@@ -19,7 +19,7 @@ namespace CKK.Logic.Interfaces
             get => _quantity;
             set
             {
-                if (value < 0) { throw new InventoryItemStockTooLowException("Item amount cannot be less than 0."); }
+                if (value < 0) { throw new InventoryItemStockTooLowException(); }
                 else { _quantity = value; }
             } 
         }

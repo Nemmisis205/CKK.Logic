@@ -20,13 +20,15 @@ namespace CKK.Logic
             shop.AddStoreItem(prod1, -1);
             shop.AddStoreItem(prod2, 1337);
             shop.AddStoreItem(prod3, 4);
-            prod2.Id = -1;
+            prod1.Id = 1;
             prod3.Id = 2;
 
-            Console.WriteLine($"{shop.FindStoreItemById(2)?.Quantity}");
+            Console.WriteLine($"{shop.GetStoreItems().Count}");
+            Console.WriteLine($"{shop.FindStoreItemById(1)?.Quantity}");
 
-            shop.RemoveStoreItem(2, 1338);
-            Console.WriteLine($"{shop.FindStoreItemById(2)?.Quantity}");
+            shop.RemoveStoreItem(1, 1338);
+            Console.WriteLine($"{shop.FindStoreItemById(1)?.Quantity}");
+            Console.WriteLine($"{shop.GetStoreItems().Count}");
 
         }
     }
