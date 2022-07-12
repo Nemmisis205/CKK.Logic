@@ -27,33 +27,29 @@ namespace CKK.Logic.Models
         }
         public ShoppingCartItem AddProduct(Product prod, int quantity)
         {
-            try
+           
+            if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
+            else if (quantity > 0)
             {
-                if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
-                else if (quantity > 0)
+                var cartCheck =
+                        from item in Products
+                        where prod == item.Product
+                        select item;
+
+                if (cartCheck.Any() == false)
                 {
-                    var cartCheck =
-                         from item in Products
-                         where prod == item.Product
-                         select item;
-
-                    Console.WriteLine($"{cartCheck.GetType()}");
-
-                    if (cartCheck.Any() == false)
-                    {
-                        Products.Add(new ShoppingCartItem(prod, quantity));
-                        return Products.Last();
-                    }
-                    else
-                    {
-                        var choice = cartCheck.First();
-                        choice.Quantity += quantity;
-                        return choice;
-                    }
+                    Products.Add(new ShoppingCartItem(prod, quantity));
+                    return Products.Last();
                 }
-                else { return null; }
+                else
+                {
+                    var choice = cartCheck.First();
+                    choice.Quantity += quantity;
+                    return choice;
+                }
             }
-            catch (InventoryItemStockTooLowException) { return null; }
+            else { return null; }
+            
         }
         public ShoppingCartItem RemoveProduct(int prodId, int quantity)
         {
