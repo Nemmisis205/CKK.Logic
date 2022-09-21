@@ -9,4 +9,8 @@
     <PackageReference Include="xUnit" Version="2.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
 </Project>
