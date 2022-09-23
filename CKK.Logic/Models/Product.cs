@@ -23,7 +23,7 @@ namespace CKK.Logic.Models
             }
         }
 
-        //public Product(int id, string name, decimal price) : base(id, name) { Price = price; }
+        public Product(int id, string name, decimal price) : base(id, name) { Price = price; }
 
 
     }

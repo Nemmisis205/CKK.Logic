@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CKK.Logic", "CKK.Logic\CKK.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CKK.tests", "CKK.tests\CKK.tests.csproj", "{9CE67F63-2C02-4985-A19B-8B15B512BAFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKK.UI", "CKK.UI\CKK.UI.csproj", "{F309E12E-40E2-42BF-85E4-A2A7D69397B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CKK.UI", "CKK.UI\CKK.UI.csproj", "{F309E12E-40E2-42BF-85E4-A2A7D69397B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

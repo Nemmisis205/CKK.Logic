@@ -9,38 +9,40 @@ using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Models
 {
-    public class Store : Entity, IStore
+    public class Store : IStore
     {
         private List<StoreItem> _items = new List<StoreItem>();
-
-        //public Store(int id, string name) : base(id, name) { }
+        private int FreshId { get; set; }
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
-            //try
-            //{
-                if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
+            
+            if (quantity <= 0) { throw new InventoryItemStockTooLowException(); }
+            else
+            {
+                var storeCheck =
+                    from item in _items
+                    where item.Product == prod
+                    select item;
+
+                if (storeCheck.Any() == false)
+                {
+                    _items.Add(new StoreItem(prod, quantity));
+                    if(prod.Id == 0)
+                    {
+                        prod.Id = FreshId;
+                        FreshId += 1;
+                    }
+                    return _items.Last();
+                        
+                }
                 else
                 {
-                    var storeCheck =
-                        from item in _items
-                        where item.Product == prod
-                        select item;
+                    var choice = storeCheck.First();
 
-                    if (storeCheck.Any() == false)
-                    {
-                        _items.Add(new StoreItem(prod, quantity));
-                        return _items.Last();
-                    }
-                    else
-                    {
-                        var choice = storeCheck.First();
-
-                        choice.Quantity += quantity;
-                        return choice;
-                    }
+                    choice.Quantity += quantity;
+                    return choice;
                 }
-            //}
-            //catch (InventoryItemStockTooLowException) { Console.WriteLine("Quantity cannot be less than 0."); return null; }
+            }
         }
         public StoreItem RemoveStoreItem(int productNumber, int quantity)
         {

@@ -14,5 +14,10 @@ namespace CKK.Logic.Models
         public StoreItem(Product product, int quantity) : base(product, quantity)
         {
         }
+
+        public override string ToString()
+        {
+            return this.Product.Name;
+        }
     }
 }

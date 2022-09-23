@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CKK.UI"
+        xmlns:Logic="clr-namespace:CKK.Logic.Models;assembly=CKK.Logic" 
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600">
+    <Window.Resources>
+        <Logic:Store x:Key="globStore"/>
+    </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -24,11 +28,67 @@
         <Rectangle Height="100" Stroke="Black" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1600" Grid.ColumnSpan="3"/>
         <TextBlock HorizontalAlignment="Center" Text="Corey's Knick Knacks" TextWrapping="Wrap" VerticalAlignment="Center" Height="80" Width="280" FontSize="24"/>
         
-        <Grid Margin="25">
-            <ItemsControl>
-                
-            </ItemsControl>
+        
+        
+        <Button Grid.Column="1" Grid.Row="1" Height="75" Content="Add New Products" FontSize="20" Margin="1075,12,25,12" Name="AddButton" Click="AddButton_Click"/>
+        <Popup Name="AddPop" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="500" IsOpen="False" Placement="Center">
+            <Grid Margin="25,25,25,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Background="Gray">Product Name: </Label>
+                <Label Grid.Row="1" Grid.Column="0" Background="Gray">Product ID (0 for new Product): </Label>
+                <Label Grid.Row="2" Grid.Column="0" Background="Gray">Product Price: </Label>
+                <Label Grid.Row="3" Grid.Column="0" Background="Gray">Product Quantity: </Label>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="newName" Height="30"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="newId" Height="30"/>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="newPrice" Height="30"/>
+                <TextBox Grid.Row="3" Grid.Column="1" x:Name="newQuantity" Height="30"/>
+                <Button Grid.Row="4" Grid.Column="1" Name="AddProdButton" Click="AddProdButton_Click" Content="Add Product"/>
+            </Grid>
+        </Popup>
+
+
+
+        <Grid Margin="25" Grid.Column="1" Grid.Row="2">
+            <ScrollViewer>
+                <ListBox Name="invBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button>
+                                <StackPanel>
+                                    <Grid Background="#FF6994B8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="175"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Image HorizontalAlignment="Left" Height="150" Margin="25,10,25,0" VerticalAlignment="Top" Width="150" Name="ProdPic" Source="/default.jpg"/>
+                                        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Grid.Row="1" Text="{Binding Product.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Name="ProdName" FontSize="14"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
         </Grid>
+
+        <Popup HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="500" IsOpen="True" Placement="Center">
+            
+        </Popup>
 
 
     </Grid>

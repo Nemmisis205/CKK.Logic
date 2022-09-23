@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CKK.Logic\CKK.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="default.jpg" />
   </ItemGroup>
 
