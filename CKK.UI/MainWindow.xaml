@@ -60,7 +60,7 @@
 
         <Grid Margin="25" Grid.Column="1" Grid.Row="2">
             <ScrollViewer>
-                <ListBox Name="invBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox Name="invBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsSynchronizedWithCurrentItem="True">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
@@ -68,7 +68,7 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Button>
+                            <Button Name="ItemButton" Click="ItemButton_Click">
                                 <StackPanel>
                                     <Grid Background="#FF6994B8">
                                         <Grid.RowDefinitions>
@@ -86,8 +86,47 @@
             </ScrollViewer>
         </Grid>
 
-        <Popup HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="500" IsOpen="True" Placement="Center">
-            
+        <Popup HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="600" IsOpen="False" Placement="Center" Name="ItemPopup">
+            <Grid Grid.Row="6" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Background="Gray">Product Name:</Label>
+                <Label Grid.Row="1" Grid.Column="0" Background="Gray">Product ID :</Label>
+                <Label Grid.Row="2" Grid.Column="0" Background="Gray">Product Price:</Label>
+                <Label Grid.Row="3" Grid.Column="0" Background="Gray">Product Quantity:</Label>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="itemName" Height="30" IsEnabled="False"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="itemId" Height="30" IsEnabled="False"/>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="itemPrice" Height="30" IsEnabled="False"/>
+                <TextBox Grid.Row="3" Grid.Column="1" x:Name="itemQuantity" Height="30" IsEnabled="False"/>
+                <Button Grid.Row="4" Grid.Column="0" x:Name="itemModifyButton" Click="itemModifyButton_Click" Content="Modify Item"/>
+                <Button Grid.Row="4" Grid.Column="1" x:Name="removeItemButton" Click="removeItemButton_Click" Content="Remove Item" Background="#FFF02C2C"/>
+                <Button Grid.Row="5" x:Name="ItemPopupCloseButton" Click="ItemPopupCloseButton_Click">Close</Button>
+            </Grid>
+        </Popup>
+        <Popup x:Name="removePopup" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="200" IsOpen="False" Placement="Center">
+            <Grid Grid.Row="2" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center" Background="#FFCF4343">Are you CERTAIN you want to delete item?</TextBlock>
+                <Button x:Name="removeConfirmationButton" Click="removeConfirmationButton_Click" Grid.Row="1" Grid.Column="0" Background="#FFF02C2C" BorderBrush="Black">Remove Item</Button>
+                <Button x:Name="confirmCloseButton" Click="confirmCloseButton_Click" Grid.Row="1" Grid.Column="1">Close</Button>
+            </Grid>
         </Popup>
 
 

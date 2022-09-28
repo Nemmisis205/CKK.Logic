@@ -26,6 +26,8 @@ namespace CKK.UI
     {
         private IStore _Store;
         public ObservableCollection<StoreItem> _Items { get; private set; }
+        public StoreItem _HeldItem { get; set; }
+
 
         public MainWindow(Store store)
         {
@@ -34,12 +36,14 @@ namespace CKK.UI
             _Items = new ObservableCollection<StoreItem>();
             Product test1 = new Product(0, "Victory", 4.99m);
             Product test2 = new Product(0, "Freedom", 9.99m);
-            Product test3 = new Product(0, "3 gyatdamn seconds to myself", 999999999.99m);
+            Product test3 = new Product(0, "Bling", 999999999.99m);
             Product test4 = new Product(0, "Test", 3.33m);
-            Product test5 = new Product(0, "12Victory", 4.99m);
-            Product test6 = new Product(0, "23Freedom", 9.99m);
-            Product test7 = new Product(0, "343 gyatdamn seconds to myself", 999999999.99m);
-            Product test8 = new Product(0, "56Test", 3.33m);
+            Product test5 = new Product(0, "Luck", 4.99m);
+            Product test6 = new Product(0, "Skill", 9.99m);
+            Product test7 = new Product(0, "Concentrated Power of Will", 999999999.99m);
+            Product test8 = new Product(0, "Pleasure", 3.33m);
+            Product test9 = new Product(0, "Pain", 3.33m);
+            Product test10 = new Product(0, "Reason to Remember the Name", 3.33m);
 
             _Store.AddStoreItem(test1, 1);
             _Store.AddStoreItem(test2, 19);
@@ -49,6 +53,8 @@ namespace CKK.UI
             _Store.AddStoreItem(test6, 19);
             _Store.AddStoreItem(test7, 1);
             _Store.AddStoreItem(test8, 2);
+            _Store.AddStoreItem(test9, 1);
+            _Store.AddStoreItem(test10, 2);
 
             invBox.ItemsSource = _Items;
             RefreshList();
@@ -87,6 +93,76 @@ namespace CKK.UI
             newPrice.Text = "";
             newQuantity.Text = "";
             RefreshList();
+        }
+
+        private void ItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            StoreItem buttonItem = clickedButton.DataContext as StoreItem;
+            itemId.Text = buttonItem.Product.Id.ToString();
+            itemName.Text = buttonItem.Product.Name;
+            itemPrice.Text = buttonItem.Product.Price.ToString();
+            itemQuantity.Text = buttonItem.Quantity.ToString();
+
+            _HeldItem = buttonItem;
+            ItemPopup.IsOpen = true;
+        }
+
+        private void ItemPopupCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            ItemPopup.IsOpen = false;
+            _HeldItem = null;
+            itemId.Text = "";
+            itemName.Text = "";
+            itemPrice.Text = "";
+            itemQuantity.Text = "";
+        }
+
+        private void itemModifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button modButton = sender as Button;
+            if (itemName.IsEnabled == false)
+            {
+                itemName.IsEnabled = true;
+                itemPrice.IsEnabled = true;
+                itemQuantity.IsEnabled = true;
+                modButton.Content = "Save Item";
+            }
+            else if (itemName.IsEnabled == true)
+            {
+                _HeldItem.Product.Name = itemName.Text;
+                _HeldItem.Product.Price = decimal.Parse(itemPrice.Text);
+                _HeldItem.Quantity = int.Parse(itemQuantity.Text);
+                itemName.IsEnabled = false;
+                itemPrice.IsEnabled = false;
+                itemQuantity.IsEnabled = false;
+                modButton.Content = "Modify Item";
+                RefreshList();
+            }
+
+        }
+
+        private void removeItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            removePopup.IsOpen = true;
+        }
+
+        private void removeConfirmationButton_Click(object sender, RoutedEventArgs e)
+        {
+            _Store.DeleteStoreItem(_HeldItem.Product.Id);
+            removePopup.IsOpen = false;
+            ItemPopup.IsOpen = false;
+            _HeldItem = null;
+            itemId.Text = "";
+            itemName.Text = "";
+            itemPrice.Text = "";
+            itemQuantity.Text = "";
+            RefreshList();
+        }
+
+        private void confirmCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            removePopup.IsOpen = false;
         }
     }
 

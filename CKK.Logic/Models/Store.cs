@@ -21,7 +21,7 @@ namespace CKK.Logic.Models
             {
                 var storeCheck =
                     from item in _items
-                    where item.Product == prod
+                    where item.Product.Id == prod.Id
                     select item;
 
                 if (storeCheck.Any() == false)
@@ -29,8 +29,8 @@ namespace CKK.Logic.Models
                     _items.Add(new StoreItem(prod, quantity));
                     if(prod.Id == 0)
                     {
-                        prod.Id = FreshId;
                         FreshId += 1;
+                        prod.Id = FreshId;
                     }
                     return _items.Last();
                         
@@ -95,5 +95,17 @@ namespace CKK.Logic.Models
             //catch (InvalidIdException) { Console.WriteLine("ID must not be negative."); return null; }
             catch (ProductDoesNotExistException) { return null; }
         }
+
+        public void DeleteStoreItem(int id)
+        {
+            var idPull =
+                from item in _items
+                where id == item.Product.Id
+                select item;
+            var choice = idPull.First();
+            _items.Remove(choice);
+
+        }
+
     }
 }
