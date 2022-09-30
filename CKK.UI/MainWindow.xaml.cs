@@ -16,6 +16,9 @@ using System.Collections.ObjectModel;
 using CKK.Logic;
 using CKK.Logic.Interfaces;
 using CKK.Logic.Models;
+using CKK.Persistance;
+using CKK.Persistance.Interfaces;
+using CKK.Persistance.Models;
 
 namespace CKK.UI
 {
@@ -29,32 +32,32 @@ namespace CKK.UI
         public StoreItem _HeldItem { get; set; }
 
 
-        public MainWindow(Store store)
+        public MainWindow(FileStore store)
         {
-            _Store = store;
+            _Store = new FileStore();
             InitializeComponent();
             _Items = new ObservableCollection<StoreItem>();
-            Product test1 = new Product(0, "Victory", 4.99m);
-            Product test2 = new Product(0, "Freedom", 9.99m);
-            Product test3 = new Product(0, "Bling", 999999999.99m);
-            Product test4 = new Product(0, "Test", 3.33m);
-            Product test5 = new Product(0, "Luck", 4.99m);
-            Product test6 = new Product(0, "Skill", 9.99m);
-            Product test7 = new Product(0, "Concentrated Power of Will", 999999999.99m);
-            Product test8 = new Product(0, "Pleasure", 3.33m);
-            Product test9 = new Product(0, "Pain", 3.33m);
-            Product test10 = new Product(0, "Reason to Remember the Name", 3.33m);
+            //Product test1 = new Product(0, "Victory", 4.99m);
+            //Product test2 = new Product(0, "Freedom", 9.99m);
+            //Product test3 = new Product(0, "Bling", 999999999.99m);
+            //Product test4 = new Product(0, "Test", 3.33m);
+            //Product test5 = new Product(0, "Luck", 4.99m);
+            //Product test6 = new Product(0, "Skill", 9.99m);
+            //Product test7 = new Product(0, "Concentrated Power of Will", 999999999.99m);
+            //Product test8 = new Product(0, "Pleasure", 3.33m);
+            //Product test9 = new Product(0, "Pain", 3.33m);
+            //Product test10 = new Product(0, "Reason to Remember the Name", 3.33m);
 
-            _Store.AddStoreItem(test1, 1);
-            _Store.AddStoreItem(test2, 19);
-            _Store.AddStoreItem(test3, 1);
-            _Store.AddStoreItem(test4, 2);
-            _Store.AddStoreItem(test5, 1);
-            _Store.AddStoreItem(test6, 19);
-            _Store.AddStoreItem(test7, 1);
-            _Store.AddStoreItem(test8, 2);
-            _Store.AddStoreItem(test9, 1);
-            _Store.AddStoreItem(test10, 2);
+            //_Store.AddStoreItem(test1, 1);
+            //_Store.AddStoreItem(test2, 19);
+            //_Store.AddStoreItem(test3, 1);
+            //_Store.AddStoreItem(test4, 2);
+            //_Store.AddStoreItem(test5, 1);
+            //_Store.AddStoreItem(test6, 19);
+            //_Store.AddStoreItem(test7, 1);
+            //_Store.AddStoreItem(test8, 2);
+            //_Store.AddStoreItem(test9, 1);
+            //_Store.AddStoreItem(test10, 2);
 
             invBox.ItemsSource = _Items;
             RefreshList();
@@ -77,7 +80,7 @@ namespace CKK.UI
 
         public MainWindow() 
         {
-            Store tp = (Store)Application.Current.FindResource("globStore");
+            FileStore tp = Application.Current.FindResource("globStore") as FileStore;
             MainWindow window = new MainWindow(tp);
             window.Show();
             this.Close();

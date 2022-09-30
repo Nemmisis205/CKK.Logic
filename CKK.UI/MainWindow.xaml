@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CKK.UI"
-        xmlns:Logic="clr-namespace:CKK.Logic.Models;assembly=CKK.Logic" 
+        xmlns:Persistance="clr-namespace:CKK.Persistance.Models;assembly=CKK.Persistance"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600">
     <Window.Resources>
-        <Logic:Store x:Key="globStore"/>
+        <Persistance:FileStore x:Key="globStore"/>
     </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>

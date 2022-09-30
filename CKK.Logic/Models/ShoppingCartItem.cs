@@ -9,6 +9,7 @@ using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Models
 {
+    [Serializable]
     public class ShoppingCartItem : InventoryItem
     {
         public ShoppingCartItem(Product product, int quantity) : base(product, quantity)

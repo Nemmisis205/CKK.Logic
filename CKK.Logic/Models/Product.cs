@@ -9,6 +9,7 @@ using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Models
 {
+    [Serializable]
     public class Product : Entity
     {
         private decimal _price;
