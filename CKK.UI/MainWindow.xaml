@@ -10,7 +10,7 @@
     <Window.Resources>
         <Persistance:FileStore x:Key="globStore"/>
     </Window.Resources>
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
@@ -27,9 +27,9 @@
         </ScrollViewer>
         <Rectangle Height="100" Stroke="Black" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1600" Grid.ColumnSpan="3"/>
         <TextBlock HorizontalAlignment="Center" Text="Corey's Knick Knacks" TextWrapping="Wrap" VerticalAlignment="Center" Height="80" Width="280" FontSize="24"/>
-        
-        
-        
+
+
+
         <Button Grid.Column="1" Grid.Row="1" Height="75" Content="Add New Products" FontSize="20" Margin="1075,12,25,12" Name="AddButton" Click="AddButton_Click"/>
         <Popup Name="AddPop" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="500" IsOpen="False" Placement="Center">
             <Grid Margin="25,25,25,25">
@@ -44,10 +44,10 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Background="Gray">Product Name: </Label>
-                <Label Grid.Row="1" Grid.Column="0" Background="Gray">Product ID (0 for new Product): </Label>
-                <Label Grid.Row="2" Grid.Column="0" Background="Gray">Product Price: </Label>
-                <Label Grid.Row="3" Grid.Column="0" Background="Gray">Product Quantity: </Label>
+                <Label Grid.Row="0" Grid.Column="0" Background="Gray">Product Name:</Label>
+                <Label Grid.Row="1" Grid.Column="0" Background="Gray">Product ID (0 for new Product):</Label>
+                <Label Grid.Row="2" Grid.Column="0" Background="Gray">Product Price:</Label>
+                <Label Grid.Row="3" Grid.Column="0" Background="Gray">Product Quantity:</Label>
                 <TextBox Grid.Row="0" Grid.Column="1" x:Name="newName" Height="30"/>
                 <TextBox Grid.Row="1" Grid.Column="1" x:Name="newId" Height="30"/>
                 <TextBox Grid.Row="2" Grid.Column="1" x:Name="newPrice" Height="30"/>
@@ -128,6 +128,12 @@
                 <Button x:Name="confirmCloseButton" Click="confirmCloseButton_Click" Grid.Row="1" Grid.Column="1">Close</Button>
             </Grid>
         </Popup>
+        <TextBox x:Name="SearchText" Grid.Column="1" HorizontalAlignment="Left" Height="38" Margin="25,12,0,0" Grid.Row="1" Text="Search" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="22"/>
+        <RadioButton x:Name="Quantity_Radio" Content="Sort by Quantity" Grid.Column="1" HorizontalAlignment="Left" Margin="25,70,0,0" Grid.Row="1" VerticalAlignment="Top" GroupName="Sort"/>
+        <RadioButton x:Name="ID_Radio" Content="Sort by ID" Grid.Column="1" HorizontalAlignment="Left" Margin="25,55,0,0" Grid.Row="1" VerticalAlignment="Top" GroupName="Sort" IsChecked="True"/>
+        <RadioButton x:Name="Price_Radio" Content="Sort by Price" Grid.Column="1" HorizontalAlignment="Left" Margin="25,85,0,0" Grid.Row="1" VerticalAlignment="Top" GroupName="Sort"/>
+        <Button x:Name="Search_Button" Content="Search" Grid.Column="1" Click="Search_Button_Click" HorizontalAlignment="Left" Margin="260,16,0,0" Grid.Row="1" VerticalAlignment="Top" Height="34" Width="66"/>
+        <Button x:Name="Clear_Button" Content="Clear" Click="Clear_Button_Click" Grid.Column="1" HorizontalAlignment="Left" Margin="351,16,0,0" Grid.Row="1" VerticalAlignment="Top" Height="34" Width="66"/>
 
 
     </Grid>

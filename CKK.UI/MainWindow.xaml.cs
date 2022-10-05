@@ -37,28 +37,6 @@ namespace CKK.UI
             _Store = new FileStore();
             InitializeComponent();
             _Items = new ObservableCollection<StoreItem>();
-            //Product test1 = new Product(0, "Victory", 4.99m);
-            //Product test2 = new Product(0, "Freedom", 9.99m);
-            //Product test3 = new Product(0, "Bling", 999999999.99m);
-            //Product test4 = new Product(0, "Test", 3.33m);
-            //Product test5 = new Product(0, "Luck", 4.99m);
-            //Product test6 = new Product(0, "Skill", 9.99m);
-            //Product test7 = new Product(0, "Concentrated Power of Will", 999999999.99m);
-            //Product test8 = new Product(0, "Pleasure", 3.33m);
-            //Product test9 = new Product(0, "Pain", 3.33m);
-            //Product test10 = new Product(0, "Reason to Remember the Name", 3.33m);
-
-            //_Store.AddStoreItem(test1, 1);
-            //_Store.AddStoreItem(test2, 19);
-            //_Store.AddStoreItem(test3, 1);
-            //_Store.AddStoreItem(test4, 2);
-            //_Store.AddStoreItem(test5, 1);
-            //_Store.AddStoreItem(test6, 19);
-            //_Store.AddStoreItem(test7, 1);
-            //_Store.AddStoreItem(test8, 2);
-            //_Store.AddStoreItem(test9, 1);
-            //_Store.AddStoreItem(test10, 2);
-
             invBox.ItemsSource = _Items;
             RefreshList();
 
@@ -166,6 +144,39 @@ namespace CKK.UI
         private void confirmCloseButton_Click(object sender, RoutedEventArgs e)
         {
             removePopup.IsOpen = false;
+        }
+
+        private void Search_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var sortedItems = new ObservableCollection<StoreItem>();
+            if (ID_Radio.IsChecked == true)
+            {
+                foreach (StoreItem i in _Store.GetAllProductsByName(SearchText.Text))
+                {
+                    sortedItems.Add(i);
+                }
+            }
+            else if (Quantity_Radio.IsChecked == true)
+            {
+                foreach (StoreItem i in _Store.GetProductsByQuantity(_Store.GetAllProductsByName(SearchText.Text)))
+                {
+                    sortedItems.Add(i);
+                }
+            }
+            else if (Price_Radio.IsChecked == true)
+            {
+                foreach (StoreItem i in _Store.GetProductsByPrice(_Store.GetAllProductsByName(SearchText.Text)))
+                {
+                    sortedItems.Add(i);
+                }
+            }
+            invBox.ItemsSource = sortedItems;
+        }
+
+        private void Clear_Button_Click(object sender, RoutedEventArgs e)
+        {
+            invBox.ItemsSource = _Items;
+            RefreshList();
         }
     }
 
