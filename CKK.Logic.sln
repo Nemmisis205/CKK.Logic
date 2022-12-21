@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31605.320
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CKK.Logic", "CKK.Logic\CKK.Logic.csproj", "{596F348A-A81F-43AE-9A9D-1F0C280E6BC8}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CKK.tests", "CKK.tests\CKK.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CKK.UI", "CKK.UI\CKK.UI.csproj", "{F309E12E-40E2-42BF-85E4-A2A7D69397B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKK.Persistance", "CKK.Persistance\CKK.Persistance.csproj", "{882CEC4A-74F1-4E47-ADE3-7FAFB4843A50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CKK.Persistance", "CKK.Persistance\CKK.Persistance.csproj", "{882CEC4A-74F1-4E47-ADE3-7FAFB4843A50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKK.DB", "CKK.DB\CKK.DB.csproj", "{4195857A-F762-485D-BCF6-7BBB4AA1A90F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{882CEC4A-74F1-4E47-ADE3-7FAFB4843A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{882CEC4A-74F1-4E47-ADE3-7FAFB4843A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{882CEC4A-74F1-4E47-ADE3-7FAFB4843A50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4195857A-F762-485D-BCF6-7BBB4AA1A90F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4195857A-F762-485D-BCF6-7BBB4AA1A90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4195857A-F762-485D-BCF6-7BBB4AA1A90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4195857A-F762-485D-BCF6-7BBB4AA1A90F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

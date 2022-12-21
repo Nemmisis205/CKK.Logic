@@ -12,20 +12,12 @@ namespace CKK.Logic.Models
     [Serializable]
     public class Product : Entity
     {
-        private decimal _price;
-
-        public decimal Price 
-        {
-            get => _price;
-            set
-            {
-                if (value < 0m) { throw new ArgumentOutOfRangeException(); }
-                else { _price = value; }
-            }
-        }
+        public new int Id { get; set; }
+        public new string Name { get; set; }
+        private decimal price;
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
 
         public Product(int id, string name, decimal price) : base(id, name) { Price = price; }
-
-
     }
 }

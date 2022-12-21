@@ -12,13 +12,38 @@ namespace CKK.Logic.Models
     [Serializable]
     public class ShoppingCartItem : InventoryItem
     {
-        public ShoppingCartItem(Product product, int quantity) : base(product, quantity)
+        public new Product Product { get; set; }
+        public int ShoppingCartId { get; set; }
+        public int CustomerId { get; set; }
+        public int ProductId { get; set; }
+        private int quantity { get; set; }
+
+        public ShoppingCartItem(Product product, int cartId, int custId, int prodId, int quantity) : base(product, quantity)
         {
+            ShoppingCartId = cartId;
+            CustomerId = custId;
+            ProductId = prodId;
         }
-        
+
+        public new int Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                if (value >= 0)
+                {
+                    quantity = value;
+                }
+                else
+                {
+                    throw new InventoryItemStockTooLowException();
+                }
+            }
+        }
         public decimal GetTotal()
         {
-            return Quantity * Product.Price;
+            return Product.Price * Quantity;
         }
+
     }
 }
