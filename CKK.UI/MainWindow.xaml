@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CKK.UI"
-        xmlns:Persistance="clr-namespace:CKK.Persistance.Models;assembly=CKK.Persistance"
+        xmlns:DB="clr-namespace:CKK.DB.Repository;assembly=CKK.DB"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600">
     <Window.Resources>
-        <Persistance:FileStore x:Key="globStore"/>
+        
     </Window.Resources>
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -76,7 +76,7 @@
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
                                         <Image HorizontalAlignment="Left" Height="150" Margin="25,10,25,0" VerticalAlignment="Top" Width="150" Name="ProdPic" Source="/default.jpg"/>
-                                        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Grid.Row="1" Text="{Binding Product.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Name="ProdName" FontSize="14"/>
+                                        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Grid.Row="1" Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Name="ProdName" FontSize="14"/>
                                     </Grid>
                                 </StackPanel>
                             </Button>

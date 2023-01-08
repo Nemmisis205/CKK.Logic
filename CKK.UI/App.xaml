@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CKK.UI"
              xmlns:Logic="clr-namespace:CKK.Logic.Models;assembly=CKK.Logic"
+             xmlns:DB ="clr-namespace:CKK.DB.Repository;assembly=CKK.DB"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Logic:Store x:Key="globStore"></Logic:Store>
+        <!--<Logic:Store x:Key="globStore"></Logic:Store>-->
     </Application.Resources>
 </Application>

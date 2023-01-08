@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CKK.UI"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200"
-             DataContext="{Binding StoreItem, Mode=OneWay}">
+             DataContext="{Binding Product, Mode=OneWay}">
     <Grid Background="#FF6994B8">
         <Grid.RowDefinitions>
             <RowDefinition Height="175"/>

@@ -16,9 +16,9 @@ using System.Collections.ObjectModel;
 using CKK.Logic;
 using CKK.Logic.Interfaces;
 using CKK.Logic.Models;
-using CKK.Persistance;
-using CKK.Persistance.Interfaces;
-using CKK.Persistance.Models;
+using CKK.DB.Interfaces;
+using CKK.DB.Repository;
+using CKK.DB.UOW;
 
 namespace CKK.UI
 {
@@ -27,26 +27,24 @@ namespace CKK.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IStore _Store;
-        public ObservableCollection<StoreItem> _Items { get; private set; }
-        public StoreItem _HeldItem { get; set; }
+        private ProductRepository _Store;
+        public ObservableCollection<Product> _Items { get; private set; }
+        public Product _HeldItem { get; set; }
 
 
-        public MainWindow(FileStore store)
-        {
-            _Store = new FileStore();
-            InitializeComponent();
-            _Items = new ObservableCollection<StoreItem>();
-            invBox.ItemsSource = _Items;
-            RefreshList();
-
-
-        }
+        //public MainWindow(ProductRepository store)
+        //{
+        //    _Store = new ProductRepository(new DatabaseConnectionFactory());
+        //    InitializeComponent();
+        //    _Items = new ObservableCollection<Product>();
+        //    invBox.ItemsSource = _Items;
+        //    RefreshList();
+        //}
 
         private void RefreshList()
         {
             _Items.Clear();
-            foreach (StoreItem i in new ObservableCollection<StoreItem>(_Store.GetStoreItems()))
+            foreach (Product i in new ObservableCollection<Product>(_Store.GetAll()))
             {
                 _Items.Add(i);
             }
@@ -56,18 +54,20 @@ namespace CKK.UI
             AddPop.IsOpen = true;
         }
 
-        public MainWindow() 
+        public MainWindow()
         {
-            FileStore tp = Application.Current.FindResource("globStore") as FileStore;
-            MainWindow window = new MainWindow(tp);
-            window.Show();
-            this.Close();
+            _Store = new ProductRepository(new DatabaseConnectionFactory());
+            InitializeComponent();
+            _Items = new ObservableCollection<Product>();
+            invBox.ItemsSource = _Items;
+            RefreshList();
+            this.Show();
         }
 
         private void AddProdButton_Click(object sender, RoutedEventArgs e)
         {
-            Product product = new Product(int.Parse(newId.Text), newName.Text, decimal.Parse(newPrice.Text));
-            _Store.AddStoreItem(product, int.Parse(newQuantity.Text));
+            Product product = new Product(int.Parse(newId.Text),decimal.Parse(newPrice.Text), int.Parse(newQuantity.Text), newName.Text);
+            _Store.Add(product);
             AddPop.IsOpen = false;
             newId.Text = "";
             newName.Text = "";
@@ -79,10 +79,10 @@ namespace CKK.UI
         private void ItemButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedButton = sender as Button;
-            StoreItem buttonItem = clickedButton.DataContext as StoreItem;
-            itemId.Text = buttonItem.Product.Id.ToString();
-            itemName.Text = buttonItem.Product.Name;
-            itemPrice.Text = buttonItem.Product.Price.ToString();
+            Product buttonItem = clickedButton.DataContext as Product;
+            itemId.Text = buttonItem.Id.ToString();
+            itemName.Text = buttonItem.Name;
+            itemPrice.Text = buttonItem.Price.ToString();
             itemQuantity.Text = buttonItem.Quantity.ToString();
 
             _HeldItem = buttonItem;
@@ -111,8 +111,8 @@ namespace CKK.UI
             }
             else if (itemName.IsEnabled == true)
             {
-                _HeldItem.Product.Name = itemName.Text;
-                _HeldItem.Product.Price = decimal.Parse(itemPrice.Text);
+                _HeldItem.Name = itemName.Text;
+                _HeldItem.Price = decimal.Parse(itemPrice.Text);
                 _HeldItem.Quantity = int.Parse(itemQuantity.Text);
                 itemName.IsEnabled = false;
                 itemPrice.IsEnabled = false;
@@ -130,7 +130,7 @@ namespace CKK.UI
 
         private void removeConfirmationButton_Click(object sender, RoutedEventArgs e)
         {
-            _Store.DeleteStoreItem(_HeldItem.Product.Id);
+            _Store.Delete(_HeldItem);
             removePopup.IsOpen = false;
             ItemPopup.IsOpen = false;
             _HeldItem = null;
@@ -146,31 +146,36 @@ namespace CKK.UI
             removePopup.IsOpen = false;
         }
 
+        //private void Search_Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var sortedItems = new ObservableCollection<Product>();
+        //    if (ID_Radio.IsChecked == true)
+        //    {
+        //        foreach (Product i in _Store.GetByName(SearchText.Text))
+        //        {
+        //            sortedItems.Add(i);
+        //        }
+        //    }
+        //    else if (Quantity_Radio.IsChecked == true)
+        //    {
+        //        foreach (Product i in _Store.GetProductsByQuantity(_Store.GetAllProductsByName(SearchText.Text)))
+        //        {
+        //            sortedItems.Add(i);
+        //        }
+        //    }
+        //    else if (Price_Radio.IsChecked == true)
+        //    {
+        //        foreach (Product i in _Store.GetProductsByPrice(_Store.GetAllProductsByName(SearchText.Text)))
+        //        {
+        //            sortedItems.Add(i);
+        //        }
+        //    }
+        //    invBox.ItemsSource = sortedItems;
+        //}
+
         private void Search_Button_Click(object sender, RoutedEventArgs e)
         {
-            var sortedItems = new ObservableCollection<StoreItem>();
-            if (ID_Radio.IsChecked == true)
-            {
-                foreach (StoreItem i in _Store.GetAllProductsByName(SearchText.Text))
-                {
-                    sortedItems.Add(i);
-                }
-            }
-            else if (Quantity_Radio.IsChecked == true)
-            {
-                foreach (StoreItem i in _Store.GetProductsByQuantity(_Store.GetAllProductsByName(SearchText.Text)))
-                {
-                    sortedItems.Add(i);
-                }
-            }
-            else if (Price_Radio.IsChecked == true)
-            {
-                foreach (StoreItem i in _Store.GetProductsByPrice(_Store.GetAllProductsByName(SearchText.Text)))
-                {
-                    sortedItems.Add(i);
-                }
-            }
-            invBox.ItemsSource = sortedItems;
+            throw new NotImplementedException();
         }
 
         private void Clear_Button_Click(object sender, RoutedEventArgs e)

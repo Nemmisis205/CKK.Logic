@@ -15,14 +15,14 @@ namespace CKK.Logic.Interfaces
         private int _quantity;
 
         public Product Product { get; set; }
-        public int Quantity 
-        { 
+        public int Quantity
+        {
             get => _quantity;
             set
             {
                 if (value < 0) { throw new InventoryItemStockTooLowException(); }
                 else { _quantity = value; }
-            } 
+            }
         }
 
         public InventoryItem(Product product, int quantity)

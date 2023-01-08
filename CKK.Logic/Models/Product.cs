@@ -10,14 +10,13 @@ using CKK.Logic.Exceptions;
 namespace CKK.Logic.Models
 {
     [Serializable]
-    public class Product : Entity
+    public class Product
     {
-        public new int Id { get; set; }
-        public new string Name { get; set; }
-        private decimal price;
+        public int Id { get; set; }
+        public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
 
-        public Product(int id, string name, decimal price) : base(id, name) { Price = price; }
+        public Product(int id, decimal price, int quantity, string name){ Price = price; Name = name; Quantity = quantity; Id = id; }
     }
 }
