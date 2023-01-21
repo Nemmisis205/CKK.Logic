@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model Product
+@model CKK.Logic.Models.Product
 <div class="card" style="width: 18rem; padding: 5px;">
     <div class="card-body">
         <h5 class="card-title text-center">@Model.Name</h5>
@@ -12,6 +12,10 @@
         <br />
     </div>
     <div class="card-footer">
-        <input class="num-spinner" id="spinner-@Model.Id" style="padding: 10px; width: 75%;" type="number" value="0" min="0" max="@Model.Quantity" step="1" />
+        @using (Html.BeginForm("Add", "Shop", new {id=Model.Id}, FormMethod.Get))
+        {
+            <input class="num-spinner" id="spinner-@Model.Id" name="quantity" style="padding: 10px; width: 75%;" type="number" value="0]" min="0" max="@Model.Quantity" step="1" />
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+        }
     </div>
 </div>

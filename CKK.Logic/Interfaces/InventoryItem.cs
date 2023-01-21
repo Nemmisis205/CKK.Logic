@@ -30,5 +30,11 @@ namespace CKK.Logic.Interfaces
             Product = product;
             Quantity = quantity;
         }
+
+        public InventoryItem(int id, decimal price , int quantity , string name)
+        {
+            Product = new Product(id, price, quantity, name);
+            Quantity = quantity;
+        }
     }
 }

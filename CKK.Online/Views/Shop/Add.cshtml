@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model ShopModel
+
+<h3>Item successfully added!</h3>
+
+
+<h2>Total: @Model.UOW.ShoppingCarts.GetTotal(ViewBag.ShoppingCartId)</h2>
+
+@using (Html.BeginForm("ViewCart", "Shop", FormMethod.Get))
+{
+    <button type="submit" class="btn btn-primary">View Cart</button>
+}

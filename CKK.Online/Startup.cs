@@ -29,10 +29,10 @@ namespace CKK.Online
 
             services.AddScoped<DatabaseConnectionFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>(sp =>
-            {
-                var factory = sp.GetRequiredService<DatabaseConnectionFactory>();
-                return new UnitOfWork(factory);
-            });
+                {
+                    var factory = sp.GetRequiredService<DatabaseConnectionFactory>();
+                    return new UnitOfWork(factory);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

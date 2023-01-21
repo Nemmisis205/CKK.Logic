@@ -8,19 +8,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
-<ul>
-    @foreach (CKK.Logic.Models.Product item in Model.UOW.Products.GetAll())
-    {
-        <li>
-            <a>@item.Name</a>
-        </li>
-    }
-</ul>
-
-@*@foreach (CKK.Logic.Models.Product item in Model.UOW.Products.GetAll())
+@foreach (CKK.Logic.Models.Product item in Model.UOW.Products.GetAll())
 {
-    
-    //<partial name="_ProductCard" model="item"></partial>
-}*@
+    <partial name="_ProductCard" model="item" />
+}

@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model CKK.Logic.Models.ShoppingCartItem
+<div class="card" style="width: 18rem; padding: 5px;">
+    <div class="card-body">
+        <h5 class="card-title text-center">@Model.Product.Name</h5>
+        <p class="card-text">@Model.Product.Price.ToString("c")</p>
+        <p class="card-text">Quantity: @Model.Quantity</p>
+        <br />
+    </div>
+</div>

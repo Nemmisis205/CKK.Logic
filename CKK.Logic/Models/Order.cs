@@ -8,10 +8,17 @@ namespace CKK.Logic.Models
 {
     public class Order
     {
-        public int OrderId { get; set; }
-        public string OrderNubmer { get; set; }
+        public int? OrderId { get; set; }
+        public string OrderNumber { get; set; }
         public int CustomerId { get; set; }
         public int ShoppingCartId { get; set; }
 
+        public Order(int? orderId, string orderNumber, int customerId, int shoppingCartId)
+        {
+            OrderId = orderId;
+            OrderNumber = orderNumber;
+            CustomerId = customerId;
+            ShoppingCartId = shoppingCartId;
+        }
     }
 }

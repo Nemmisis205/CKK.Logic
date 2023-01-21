@@ -20,7 +20,7 @@ namespace CKK.DB.Repository
 
         public int Add(Order entity)
         {
-            var sql = "Insert into Orders(OrderNumber, CustomerId, ShoppingCartId) VALUES (@OrderNumber, @CustomerId, @ShoppingCartId";
+            var sql = "Insert into Orders(OrderID, OrderNumber, CustomerId, ShoppingCartId) VALUES (@OrderId, @OrderNumber, @CustomerId, @ShoppingCartId)";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
@@ -83,5 +83,17 @@ namespace CKK.DB.Repository
                 return result;
             }
         }
+
+        public int GetLastId()
+        {
+            var sql = "SELECT MAX(OrderId) FROM Orders";
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                connection.Open();
+                var result = connection.QuerySingle<int>(sql);
+                return result;
+            }
+        }
+
     }
 }

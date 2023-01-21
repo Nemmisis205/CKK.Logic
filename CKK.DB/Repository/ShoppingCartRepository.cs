@@ -20,7 +20,7 @@ namespace CKK.DB.Repository
 
         public int Add(ShoppingCartItem entity)
         {
-            var sql = "Insert into ShoppingCartItems(ShoppingCartId, ProductId, Quantity) VALUES (@ShoppingCartId, @ProductId, @Quantity";
+            var sql = "Insert into ShoppingCartItems(ShoppingCartId, ProductId, Quantity) VALUES (@ShoppingCartId, @ProductId, @Quantity)";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
@@ -47,7 +47,7 @@ namespace CKK.DB.Repository
 
         public List<ShoppingCartItem> GetProducts(int ShoppingCartId)
         {
-            var sql = "Select * FROM ShoppingCartItems WHERE ShoppingCartId = @ShoppingCartId";
+            var sql = "SELECT p.Id , p.Price, s.Quantity , p.Name FROM Products p, ShoppingCartItems s Where p.Id = s.ProductId AND s.ShoppingCartId = @ShoppingCartId";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
@@ -58,7 +58,7 @@ namespace CKK.DB.Repository
 
         public decimal GetTotal(int ShoppingCartId)
         {
-            var sql = "Select * FROM ShoppingCartItems WHERE ShoppingCartId = @ShoppingCartId";
+            var sql = "SELECT p.Id , p.Price, s.Quantity , p.Name FROM Products p, ShoppingCartItems s Where p.Id = s.ProductId AND s.ShoppingCartId = @ShoppingCartId";
             decimal total = 0;
             using (var connection = _connectionFactory.GetConnection)
             {
