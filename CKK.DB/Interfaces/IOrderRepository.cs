@@ -6,6 +6,6 @@ namespace CKK.DB.Interfaces
 	public interface IOrderRepository : IGenericRepository<Order>
 	{
 		Order GetOrderByCustomerId(int id);
-        int GetLastId();
+        int? GetLastId();
     }
 }

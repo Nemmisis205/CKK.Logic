@@ -31,20 +31,10 @@ namespace CKK.UI
         public ObservableCollection<Product> _Items { get; private set; }
         public Product _HeldItem { get; set; }
 
-
-        //public MainWindow(ProductRepository store)
-        //{
-        //    _Store = new ProductRepository(new DatabaseConnectionFactory());
-        //    InitializeComponent();
-        //    _Items = new ObservableCollection<Product>();
-        //    invBox.ItemsSource = _Items;
-        //    RefreshList();
-        //}
-
-        private void RefreshList()
+        private async void RefreshList()
         {
             _Items.Clear();
-            foreach (Product i in new ObservableCollection<Product>(_Store.GetAll()))
+            foreach (Product i in new ObservableCollection<Product>(await _Store.GetAll()))
             {
                 _Items.Add(i);
             }
@@ -64,10 +54,10 @@ namespace CKK.UI
             this.Show();
         }
 
-        private void AddProdButton_Click(object sender, RoutedEventArgs e)
+        private async void AddProdButton_Click(object sender, RoutedEventArgs e)
         {
             Product product = new Product(int.Parse(newId.Text),decimal.Parse(newPrice.Text), int.Parse(newQuantity.Text), newName.Text);
-            _Store.Add(product);
+            await _Store.Add(product);
             AddPop.IsOpen = false;
             newId.Text = "";
             newName.Text = "";
@@ -99,7 +89,7 @@ namespace CKK.UI
             itemQuantity.Text = "";
         }
 
-        private void itemModifyButton_Click(object sender, RoutedEventArgs e)
+        private async void itemModifyButton_Click(object sender, RoutedEventArgs e)
         {
             Button modButton = sender as Button;
             if (itemName.IsEnabled == false)
@@ -118,7 +108,9 @@ namespace CKK.UI
                 itemPrice.IsEnabled = false;
                 itemQuantity.IsEnabled = false;
                 modButton.Content = "Modify Item";
+                await _Store.Update(_HeldItem);
                 RefreshList();
+                _HeldItem= null;
             }
 
         }
@@ -128,9 +120,9 @@ namespace CKK.UI
             removePopup.IsOpen = true;
         }
 
-        private void removeConfirmationButton_Click(object sender, RoutedEventArgs e)
+        private async void removeConfirmationButton_Click(object sender, RoutedEventArgs e)
         {
-            _Store.Delete(_HeldItem);
+            await _Store.Delete(_HeldItem);
             removePopup.IsOpen = false;
             ItemPopup.IsOpen = false;
             _HeldItem = null;
@@ -145,33 +137,6 @@ namespace CKK.UI
         {
             removePopup.IsOpen = false;
         }
-
-        //private void Search_Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var sortedItems = new ObservableCollection<Product>();
-        //    if (ID_Radio.IsChecked == true)
-        //    {
-        //        foreach (Product i in _Store.GetByName(SearchText.Text))
-        //        {
-        //            sortedItems.Add(i);
-        //        }
-        //    }
-        //    else if (Quantity_Radio.IsChecked == true)
-        //    {
-        //        foreach (Product i in _Store.GetProductsByQuantity(_Store.GetAllProductsByName(SearchText.Text)))
-        //        {
-        //            sortedItems.Add(i);
-        //        }
-        //    }
-        //    else if (Price_Radio.IsChecked == true)
-        //    {
-        //        foreach (Product i in _Store.GetProductsByPrice(_Store.GetAllProductsByName(SearchText.Text)))
-        //        {
-        //            sortedItems.Add(i);
-        //        }
-        //    }
-        //    invBox.ItemsSource = sortedItems;
-        //}
 
         private void Search_Button_Click(object sender, RoutedEventArgs e)
         {

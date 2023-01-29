@@ -4,11 +4,19 @@
 @{
 }
 @model CKK.Logic.Models.ShoppingCartItem
-<div class="card" style="width: 18rem; padding: 5px;">
+<div class="card col-4" style="width: 18rem; padding: 5px;">
     <div class="card-body">
         <h5 class="card-title text-center">@Model.Product.Name</h5>
         <p class="card-text">@Model.Product.Price.ToString("c")</p>
         <p class="card-text">Quantity: @Model.Quantity</p>
         <br />
+    </div>
+    <div class="card-footer">
+        @using (Html.BeginForm("Edit", "Shop", new { id = Model.ProductId }, FormMethod.Get))
+        {
+            <input class="num-spinner" id="spinner-@Model.ProductId" name="Quantity" style="padding: 10px; width: 75%;" type="number" value="" min="0" step="1" />
+            <br />
+            <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Change Quantity</button>
+        }
     </div>
 </div>

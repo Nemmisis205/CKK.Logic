@@ -18,46 +18,46 @@ namespace CKK.DB.Repository
         }
 
 
-        public int Add(Order entity)
+        public async Task<int> Add(Order entity)
         {
             var sql = "Insert into Orders(OrderID, OrderNumber, CustomerId, ShoppingCartId) VALUES (@OrderId, @OrderNumber, @CustomerId, @ShoppingCartId)";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task.Run(() => connection.Execute(sql, entity));
                 return result;
             }
         }
 
-        public int Delete(Order entity)
+        public async Task<int> Delete(Order entity)
         {
             var sql = "Delete FROM Orders WHERE (OrderId = @OrderId)";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task.Run(() => connection.Execute(sql, entity));
                 return result;
             }
         }
 
-        public List<Order> GetAll()
+        public async Task<List<Order>> GetAll()
         {
             var sql = "Select * From Orders";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Query<Order>(sql).ToList();
+                var result = await Task.Run(() => connection.Query<Order>(sql).ToList());
                 return result;
             }
         }
 
-        public Order GetById(int id)
+        public async Task<Order> GetById(int id)
         {
             var sql = "SELECT * FROM Orders WHERE OrderId = @OrderId";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.QuerySingleOrDefault<Order>(sql, new { OrderId = id });
+                var result = await Task.Run(() => connection.QuerySingleOrDefault<Order>(sql, new { OrderId = id }));
                 return result;
             }
         }
@@ -73,24 +73,25 @@ namespace CKK.DB.Repository
             }
         }
 
-        public int Update(Order entity)
+        public async Task<int> Update(Order entity)
         {
             var sql = "UPDATE Orders Set OrderNumber=@OrderNumber, CustomerId=@CustomerId, ShoppingCartId=@ShoppingCartId WHERE OrderId = @OrderId";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task.Run(() => connection.Execute(sql, entity));
                 return result;
             }
         }
 
-        public int GetLastId()
+        public int? GetLastId()
         {
             var sql = "SELECT MAX(OrderId) FROM Orders";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
                 var result = connection.QuerySingle<int>(sql);
+                
                 return result;
             }
         }

@@ -2,6 +2,6 @@
 {
     public class CheckOutModel
     {
-        string StatusMessage { get; set; }
+        public string StatusMessage { get; set; }
     }
 }

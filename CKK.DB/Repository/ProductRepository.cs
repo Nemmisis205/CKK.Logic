@@ -21,69 +21,69 @@ namespace CKK.DB.Repository
         }
 
 
-        public int Add(Product entity)
+        public async Task<int> Add(Product entity)
         {
             var sql = "Insert into Products(Price,Quantity,Name) VALUES (@Price,@Quantity,@Name)";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task.Run(() => connection.Execute(sql, entity));
                 return result;
             }
         }
 
-        public int Delete(Product entity)
+        public async Task<int> Delete(Product entity)
         {
             var sql = "Delete FROM Products WHERE (Id = @Id)";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task.Run(() => connection.Execute(sql, entity));
                 return result;
             }
 
         }
 
-        public List<Product> GetAll()
+        public async Task<List<Product>> GetAll()
         {
             var sql = "Select * From Products";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Query<Product>(sql).ToList();
+                var result = await Task.Run(() => connection.Query<Product>(sql).ToList());
                 return result;
             }
         }
 
-        public Product GetById(int id)
+        public async Task<Product> GetById(int id)
         {
             var sql = "SELECT * FROM Products WHERE Id = @Id";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.QuerySingleOrDefault<Product>(sql, new { Id = id });
+                var result = await Task.Run(() => connection.QuerySingleOrDefault<Product>(sql, new { Id = id }));
                 return result;
             }
         }
 
-        public List<Product> GetByName(string name)
+        public async Task<List<Product>> GetByName(string name)
         {
             var sql = "SELECT * FROM Products WHERE Name = @Name";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Query<Product>(sql).ToList();
+                var result = await Task.Run(() => connection.Query<Product>(sql).ToList());
                 return result;
             }
         }
 
-        public int Update(Product entity)
+        public async Task<int> Update(Product entity)
         {
             var sql = "UPDATE Products Set Price=@Price, Quantity=@Quantity, Name=@Name WHERE Id = @Id";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task.Run(() => connection.Execute(sql, entity));
                 return result;
             }
         }

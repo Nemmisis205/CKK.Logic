@@ -3,18 +3,24 @@
 *@
 @{
 }
-
 <h2>Your Cart</h2>
-
-@foreach (var item in Model.UOW.ShoppingCarts.GetProducts(205))
-{
-    <partial name="_CartCard" model="item" />
-}
+<div class="card-deck col-12">
+    @foreach (var item in Model.UOW.ShoppingCarts.GetProducts(205))
+    {
+        <partial name="_CartCard" model="item" />
+    }
+</div>
 
 <h2>Total: @Model.UOW.ShoppingCarts.GetTotal(ViewBag.ShoppingCartId)</h2>
 
 @using (Html.BeginForm("Checkout", "Shop", new { Id = ViewBag.CustomerId }, FormMethod.Get))
 {
-        <button type="submit" class="btn btn-primary">CheckOut</button>
+        <button type="submit" class="btn btn-primary">Check Out</button>
 }
+
+@using (Html.BeginForm("ClearCart", "Shop" , FormMethod.Get))
+{
+    <button class="btn btn-danger" href="@Url.Action("ShoppingCart", "Shop")" style="margin-top: 5px;">Clear Cart</button>
+}
+<a style="margin: 5px;" href="@Url.Action("ShoppingCart" , "Shop")">Back to Store</a>
 

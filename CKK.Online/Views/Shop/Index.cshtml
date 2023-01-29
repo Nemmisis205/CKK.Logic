@@ -7,9 +7,19 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-
-@foreach (CKK.Logic.Models.Product item in Model.UOW.Products.GetAll())
-{
-    <partial name="_ProductCard" model="item" />
-}
+<div>
+    @using (Html.BeginForm("ViewCart", "Shop", FormMethod.Get))
+    {
+        <button class="btn btn-secondary" type="submit">Check Out (@Model.UOW.ShoppingCarts.GetCartItemCount(ViewBag.ShoppingCartId))</button>
+    }
+    <br/>
+</div>
+<div class="col-12 card-deck">
+    @foreach (CKK.Logic.Models.Product item in Model.UOW.Products.GetAll().Result)
+    {
+        <div class="col-4">
+            <partial name="_ProductCard" model="item"/>
+        </div>
+    }
+    
+</div>

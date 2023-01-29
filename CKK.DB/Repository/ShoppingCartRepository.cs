@@ -18,13 +18,13 @@ namespace CKK.DB.Repository
         }
 
 
-        public int Add(ShoppingCartItem entity)
+        public async Task<int> Add(ShoppingCartItem entity)
         {
             var sql = "Insert into ShoppingCartItems(ShoppingCartId, ProductId, Quantity) VALUES (@ShoppingCartId, @ProductId, @Quantity)";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task<int>.Run(() =>connection.Execute(sql, entity));
                 return result;
             }
         }
@@ -77,13 +77,24 @@ namespace CKK.DB.Repository
             throw new NotImplementedException();
         }
 
-        public int Update(ShoppingCartItem entity)
+        public async Task<int>Update(ShoppingCartItem entity)
         {
             var sql = "UPDATE ShoppingCartItems Set Quantity = @Quantity WHERE ShoppingCartId = @ShoppingCartId AND ProductId = @ProductId";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = connection.Execute(sql, entity);
+                var result = await Task<int>.Run(() =>connection.Execute(sql, entity));
+                return result;
+            }
+        }
+
+        public int GetCartItemCount(int ShoppingCartId)
+        {
+            var sql = "SELECT * FROM ShoppingCartItems WHERE ShoppingCartId = @ShoppingCartId";
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                connection.Open();
+                var result = connection.Query(sql, new { ShoppingCartId = ShoppingCartId }).ToList().Count();
                 return result;
             }
         }

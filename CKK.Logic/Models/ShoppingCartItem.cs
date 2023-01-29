@@ -21,7 +21,6 @@ namespace CKK.Logic.Models
             ShoppingCartId = cartId;
             CustomerId = custId;
             ProductId = prodId;
-            Quantity = quantity;
         }
 
         public ShoppingCartItem(int id, decimal price, int quantity, string name): base(id, price, quantity, name)

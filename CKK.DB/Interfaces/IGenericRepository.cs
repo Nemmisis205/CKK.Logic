@@ -1,15 +1,16 @@
 ﻿using System;
 using CKK.Logic;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CKK.DB.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        T GetById(int id);
-        List<T> GetAll();
-        int Add(T entity);
-        int Update(T entity);
-        int Delete(T entity);
+        Task<T> GetById(int id);
+        Task<List<T>> GetAll();
+        Task<int> Add(T entity);
+        Task<int> Update(T entity);
+        Task<int> Delete(T entity);
     }
 }

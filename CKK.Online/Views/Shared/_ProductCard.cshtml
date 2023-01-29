@@ -15,7 +15,8 @@
         @using (Html.BeginForm("Add", "Shop", new {id=Model.Id}, FormMethod.Get))
         {
             <input class="num-spinner" id="spinner-@Model.Id" name="quantity" style="padding: 10px; width: 75%;" type="number" value="0]" min="0" max="@Model.Quantity" step="1" />
-            <button type="submit" class="btn btn-primary">Add to Cart</button>
+            <br />
+            <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Add to Cart</button>
         }
     </div>
 </div>
