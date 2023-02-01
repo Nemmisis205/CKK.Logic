@@ -38,6 +38,7 @@ namespace CKK.UI
             {
                 _Items.Add(i);
             }
+            Sorter(_Items);
         }
         public void AddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -49,8 +50,8 @@ namespace CKK.UI
             _Store = new ProductRepository(new DatabaseConnectionFactory());
             InitializeComponent();
             _Items = new ObservableCollection<Product>();
-            invBox.ItemsSource = _Items;
             RefreshList();
+            invBox.ItemsSource = _Items;
             this.Show();
         }
 
@@ -141,6 +142,7 @@ namespace CKK.UI
         private async void Search_Button_Click(object sender, RoutedEventArgs e)
         {
             _Items = new ObservableCollection<Product>(await _Store.GetByName(SearchText.Text));
+            Sorter(_Items);
             invBox.ItemsSource = _Items;
         }
 
@@ -148,6 +150,44 @@ namespace CKK.UI
         {
             invBox.ItemsSource = _Items;
             RefreshList();
+        }
+
+        private ObservableCollection<Product> Sorter(ObservableCollection<Product> items)
+        {
+            if (Quantity_Radio.IsChecked == true)
+            {
+                var orderedItems = items.OrderBy(x => x.Quantity).ToList();
+                _Items.Clear();
+                foreach (var item in orderedItems)
+                {
+                    _Items.Add(item);
+                }
+                return _Items;
+            }
+            else if (ID_Radio.IsChecked == true)
+            {
+                var orderedItems = items.OrderBy(x => x.Id).ToList();
+                _Items.Clear();
+                foreach (var item in orderedItems)
+                {
+                    _Items.Add(item);
+                }
+                return _Items;
+            }
+            else if (Price_Radio.IsChecked == true)
+            {
+                var orderedItems = items.OrderBy(x => x.Price).ToList();
+                _Items.Clear();
+                foreach (var item in orderedItems)
+                {
+                    _Items.Add(item);
+                }
+                return _Items;
+            }
+            else
+            {
+                return _Items;
+            }
         }
     }
 

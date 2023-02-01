@@ -79,12 +79,21 @@ namespace CKK.DB.Repository
 
         public async Task<int>Update(ShoppingCartItem entity)
         {
-            var sql = "UPDATE ShoppingCartItems Set Quantity = @Quantity WHERE ShoppingCartId = @ShoppingCartId AND ProductId = @ProductId";
-            using (var connection = _connectionFactory.GetConnection)
+            if (entity.Quantity == 0)
             {
-                connection.Open();
-                var result = await Task<int>.Run(() =>connection.Execute(sql, entity));
-                return result;
+                await Delete(entity);
+                return 0;
+            }
+            else
+            {
+
+                var sql = "UPDATE ShoppingCartItems Set Quantity = @Quantity WHERE ShoppingCartId = @ShoppingCartId AND ProductId = @ProductId";
+                using (var connection = _connectionFactory.GetConnection)
+                {
+                    connection.Open();
+                    var result = await Task<int>.Run(() => connection.Execute(sql, entity));
+                    return result;
+                }
             }
         }
 
@@ -95,6 +104,17 @@ namespace CKK.DB.Repository
             {
                 connection.Open();
                 var result = connection.Query(sql, new { ShoppingCartId = ShoppingCartId }).ToList().Count();
+                return result;
+            }
+        }
+
+        public async Task<int> Delete(ShoppingCartItem entity)
+        {
+            var sql = "Delete FROM ShoppingCartItems WHERE ShoppingCartId = @ShoppingCartId AND ProductId = @ProductId";
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                connection.Open();
+                var result = await Task.Run(() => connection.Execute(sql, entity));
                 return result;
             }
         }
