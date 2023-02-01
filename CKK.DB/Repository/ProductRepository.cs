@@ -68,11 +68,11 @@ namespace CKK.DB.Repository
 
         public async Task<List<Product>> GetByName(string name)
         {
-            var sql = "SELECT * FROM Products WHERE Name = @Name";
+            var sql = "SELECT * FROM Products WHERE NAME LIKE ('%' + @Name + '%')";
             using (var connection = _connectionFactory.GetConnection)
             {
                 connection.Open();
-                var result = await Task.Run(() => connection.Query<Product>(sql).ToList());
+                var result = await Task.Run(() => connection.Query<Product>(sql, new { Name = name }).ToList());
                 return result;
             }
         }

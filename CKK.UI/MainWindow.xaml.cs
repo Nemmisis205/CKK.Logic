@@ -138,9 +138,10 @@ namespace CKK.UI
             removePopup.IsOpen = false;
         }
 
-        private void Search_Button_Click(object sender, RoutedEventArgs e)
+        private async void Search_Button_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            _Items = new ObservableCollection<Product>(await _Store.GetByName(SearchText.Text));
+            invBox.ItemsSource = _Items;
         }
 
         private void Clear_Button_Click(object sender, RoutedEventArgs e)
